@@ -6,8 +6,6 @@ import com.example.todoapp.repository.TaskRepository;
 import com.example.todoapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 @Service
@@ -32,5 +30,13 @@ public class TaskService {
 
     public void deleteTask(Long taskId) {
         taskRepository.deleteById(taskId);
+    }
+
+    public Task updateTask(Long taskId, Task updatedTask) {
+        Task existingTask = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found with id " + taskId));
+        existingTask.setTitle(updatedTask.getTitle());
+        existingTask.setStatus(updatedTask.getStatus());
+        return taskRepository.save(existingTask);
     }
 }

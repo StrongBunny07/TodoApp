@@ -29,13 +29,22 @@ public class TaskController {
         return taskService.getTaskByUser(userId);
     }
 
-    @DeleteMapping("/{taskId}")
-    public void deleteTask(@PathVariable Long taskId) {
+    @DeleteMapping("/{userId}/{taskId}")
+    public void deleteTask(@PathVariable Long taskId , @PathVariable Long userId) {
         taskService.deleteTask(taskId);
     }
 
     @GetMapping
     public List<Task> getTask() {
         return null;
+    }
+
+    @PutMapping("/{userId}/{taskId}")
+    public Task updateTask(
+        @PathVariable Long userId,
+        @PathVariable Long taskId,
+        @RequestBody Task task
+    ) {
+        return taskService.updateTask(taskId, task);
     }
 }
